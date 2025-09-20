@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إدارة الصيادين</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background: #f4f6f9;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    .form-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 8px;
+      margin: 5px 0;
+      width: 95%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: #007bff;
+      color: white;
+    }
+    #search {
+      width: 50%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h2>إضافة إسم الصيادين ورقم القارب</h2>
+  <div class="form-box">
+    <label>إسم الصياد</label>
+    <input type="text" id="name">
+    
+    <label>رقم القارب</label>
+    <input type="text" id="boat" >
+    <button onclick="addFisher()">إضافة</button>
+  </div>
+
+  <input type="text" id="search" placeholder="🔍 بحث عن صياد بالاسم" onkeyup="searchFisher()">
+
+  <table id="fisherTable">
+    <thead>
+      <tr>
+        <th>إسم الصياد</th>
+        <th>رقم القارب</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- البيانات تضاف هنا -->
+    </tbody>
+  </table>
+
+  <script>
+    function addFisher() {
+      let name = document.getElementById("name").value.trim();
+      let boat = document.getElementById("boat").value.trim();
+
+      if (name === "" || boat === "") {
+        alert("من فضلك أدخل كل البيانات");
+        return;
+      }
+
+      let table = document.getElementById("fisherTable").getElementsByTagName('tbody')[0];
+      let newRow = table.insertRow();
+
+      let cell1 = newRow.insertCell(0);
+      let cell2 = newRow.insertCell(1);
+
+      cell1.innerHTML = name;
+      cell2.innerHTML = boat;
+
+      document.getElementById("name").value = "";
+      document.getElementById("boat").value = "";
+    }
+
+    function searchFisher() {
+      let input = document.getElementById("search").value.toLowerCase();
+      let table = document.getElementById("fisherTable").getElementsByTagName('tbody')[0];
+      let rows = table.getElementsByTagName("tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        let nameCell = rows[i].getElementsByTagName("td")[0];
+        if (nameCell) {
+          let txtValue = nameCell.textContent || nameCell.innerText;
+          rows[i].style.display = txtValue.toLowerCase().indexOf(input) > -1 ? "" : "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+
+
